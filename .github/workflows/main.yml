@@ -1,1 +1,29 @@
+on:
+  push:
+    branches:
+      - master
+
+
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+
+
+
+
+    steps:
+      - uses : actions/checkout@v3
+      
+      - name : "login to docker hub"
+        run: docker login --username ${{ secrets.DOCKERUSERNAME }} --password ${{ secrets.DOCKERTOKEN }}
+
+      - name: "building docker image "
+        run: docker build -t ${{ secrets.DOCKERUSERNAME }}/menna .
+
+
+      - name: "pushing to docker hub "
+        run: docker push ${{ secrets.DOCKERUSERNAME }}/menna     
 
